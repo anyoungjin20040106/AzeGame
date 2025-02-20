@@ -7,9 +7,11 @@ public class Result : MonoBehaviour
 {
     Text result;
     Button nextLevel, menu;
+    AudioSource audio;
     void Start()
     {
         result = GetComponent<Text>();
+        audio=GetComponent<AudioSource>();
         nextLevel = GameObject.Find("nextLevel").GetComponent<Button>();
         menu = GameObject.Find("menu").GetComponent<Button>();
         result.text = Session.isSuccess ? "해설\n" + Session.explanation : "오답";
@@ -33,6 +35,8 @@ public class Result : MonoBehaviour
         {
             SceneMove.LoadScene(Scenes.Menu);
         });
+        audio.clip=Resources.Load<AudioClip>(Session.isSuccess ? "success":"fail");
+        audio.Play();
     }
 
     void Update()
